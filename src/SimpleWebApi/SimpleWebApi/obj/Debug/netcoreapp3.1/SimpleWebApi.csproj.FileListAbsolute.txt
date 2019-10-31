@@ -1,0 +1,9 @@
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\bin\Debug\netcoreapp3.1\appsettings.Development.json
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\bin\Debug\netcoreapp3.1\appsettings.json
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\SimpleWebApi.csprojAssemblyReference.cache
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\staticwebassets\SimpleWebApi.StaticWebAssets.Manifest.cache
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\staticwebassets\SimpleWebApi.StaticWebAssets.xml
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\SimpleWebApi.AssemblyInfoInputs.cache
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\SimpleWebApi.AssemblyInfo.cs
+D:\Projects\Community\SimpleWebApi\SimpleWebApi\obj\Debug\netcoreapp3.1\SimpleWebApi.RazorTargetAssemblyInfo.cache
