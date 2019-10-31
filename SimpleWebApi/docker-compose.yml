@@ -1,0 +1,57 @@
+version: '3.6'
+
+services:
+  simplewebapi:
+    image: ${DOCKER_REGISTRY-}simplewebapi
+    environment:
+      - INFLUXREPORTING__BASEURI=${INFLUXREPORTING__BASEURI:-http://telegraf:2021}
+    build:
+      context: .
+      dockerfile: SimpleWebApi/Dockerfile
+
+  telegraf:
+    image: telegraf:1.12.4-alpine
+    environment:
+      - HOST_SYS=/hostfs/sys
+      - HOST_MOUNT_PREFIX=/hostfs
+      - TELEGRAF_INFLUXDB_DBNAME=${INFLUXDB_DBNAME}
+      - TELEGRAF_INFLUXDB_USERNAME=${INFLUXDB_USERNAME}
+      - TELEGRAF_INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
+    volumes:
+      - ./telegraf/etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /sys:/hostfs/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - influxdb
+
+  influxdb:
+    image: influxdb:1.5.3
+    environment:
+      - INFLUXDB_DB=${INFLUXDB_DBNAME}
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+    ports:
+      - '8086:8086'
+    volumes:
+      - /influxdb_data:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:6.4.3
+    environment:
+      - GF_SECURITY_ADMIN_USER=${INFLUXDB_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+    depends_on:
+      - influxdb
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes: 
+  grafana_data: {}
+  influxdb_data: {}
+
+networks: 
+  default:
+    external: false
+    name: "healthmonitoring"
