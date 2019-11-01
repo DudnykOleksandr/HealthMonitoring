@@ -19,7 +19,9 @@ services:
       - TELEGRAF_INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
     volumes:
       - ./telegraf/etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+	  #Control groups are exposed through a pseudo-filesystem under /sys/fs/cgroup
       - /sys:/hostfs/sys:ro
+	  #docker daemon unix socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
       - influxdb
