@@ -10,10 +10,12 @@
     <PackageReference Include="App.Metrics" Version="3.2.0" />
     <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="3.2.0" />
     <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="3.2.0" />
+    <PackageReference Include="App.Metrics.Extensions.HealthChecks" Version="3.2.0" />
     <PackageReference Include="App.Metrics.Reporting.Console" Version="3.2.0" />
     <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="3.2.0" />
     <PackageReference Include="App.Metrics.Reporting.TextFile" Version="3.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 
