@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics;
 using App.Metrics.Extensions.DependencyInjection;
@@ -31,7 +33,33 @@ namespace SimpleWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck<RandomHealthCheck>("random")
+                .AddCheck("ping google", () =>
+                {
+                    try
+                    {
+                        using (var ping = new Ping())
+                        {
+                            var reply = ping.Send("www.google.com");
+                            if (reply.Status != IPStatus.Success)
+                            {
+                                return HealthCheckResult.Unhealthy();
+                            }
+
+                            if (reply.RoundtripTime > 100)
+                            {
+                                return HealthCheckResult.Degraded();
+                            }
+
+                            return HealthCheckResult.Healthy();
+                        }
+                    }
+                    catch
+                    {
+                        return HealthCheckResult.Unhealthy();
+                    }
+                });
 
             var metrics = AppMetrics.CreateDefaultBuilder()
                 .Configuration
@@ -73,6 +101,20 @@ namespace SimpleWebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public class RandomHealthCheck : IHealthCheck
+        {
+            public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+            {
+                if (DateTime.UtcNow.Minute % 2 == 0)
+                {
+                    return Task.FromResult(HealthCheckResult.Healthy());
+                }
+
+                return Task.FromResult(HealthCheckResult.Unhealthy(description: "failed"));
+            }
+
         }
     }
 }
