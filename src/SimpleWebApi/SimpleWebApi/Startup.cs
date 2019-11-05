@@ -33,6 +33,7 @@ namespace SimpleWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddHealthChecks()
                 .AddCheck<RandomHealthCheck>("random")
                 .AddCheck("ping google", () =>
