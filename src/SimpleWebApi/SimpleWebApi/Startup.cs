@@ -76,9 +76,9 @@ namespace SimpleWebApi
                     });
 
             services
+                .AddMetricsTrackingMiddleware()
                 .AddMetrics(metrics)
                 .AddMetricsReportingHostedService()
-                .AddMetricsTrackingMiddleware()
                 .AddSingleton<IHealthCheckPublisher, AppMetricsHealthCheckPublisher>();
         }
 
@@ -89,19 +89,16 @@ namespace SimpleWebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMetricsAllMiddleware();
-
-            app.UseHealthChecks("/health");
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHealthChecks("/health");
+
+            app.UseMetricsAllMiddleware();
         }
 
         public class RandomHealthCheck : IHealthCheck
