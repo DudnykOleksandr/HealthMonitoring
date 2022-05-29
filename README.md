@@ -1,5 +1,7 @@
 # Docker Stack for Asp.Net Core Web Api, AppMetrics, Telegraf, InfluxDB, Grafana
 
+Presentation docs of health monitoring system on .net core using modern services.
+
 ## Start Docker Stack
 
 ```bash
